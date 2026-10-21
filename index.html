@@ -28,11 +28,31 @@
       -webkit-touch-callout: none;
     }
     canvas { display: block; }
+    #start {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 10;
+    }
+    #start.hidden { display: none; }
+    #start button {
+      font: 600 24px -apple-system, system-ui, sans-serif;
+      color: #000;
+      background: #fff;
+      border: 0;
+      border-radius: 999px;
+      padding: 18px 44px;
+      cursor: pointer;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js"></script>
   <script src="https://unpkg.com/ml5@1.2.1/dist/ml5.min.js"></script>
 </head>
 <body>
+  <div id="start"><button>Start fullscreen</button></div>
   <script src="sketch.js"></script>
 </body>
 </html>

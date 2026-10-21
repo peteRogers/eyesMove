@@ -10,6 +10,9 @@ let video;
 let faces = [];
 let frames = [];
 
+let showPreview = true;
+let previewRect = { x: 0, y: 0, w: 0, h: 0 };
+
 let target = 0;   // 0..1 from face position
 let pos = 0;      // smoothed 0..1
 
@@ -32,6 +35,37 @@ function setup() {
   video.size(640, 480);
   video.hide();
   faceMesh.detectStart(video, gotFaces);
+
+  // tap the webcam preview to hide it, tap the same corner to bring it back
+  // (pointerdown avoids the double touch + mouse events on iPad)
+  document.querySelector('canvas').addEventListener('pointerdown', (e) => {
+    let r = previewRect;
+    if (e.clientX >= r.x && e.clientX <= r.x + r.w &&
+        e.clientY >= r.y && e.clientY <= r.y + r.h) {
+      showPreview = !showPreview;
+    }
+  });
+
+  setupFullscreenButton();
+}
+
+function setupFullscreenButton() {
+  let overlay = document.getElementById('start');
+  let el = document.documentElement;
+
+  overlay.querySelector('button').addEventListener('click', () => {
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    overlay.classList.add('hidden');
+  });
+
+  // show the button again if fullscreen is exited
+  let onChange = () => {
+    let fs = document.fullscreenElement || document.webkitFullscreenElement;
+    if (!fs) overlay.classList.remove('hidden');
+  };
+  document.addEventListener('fullscreenchange', onChange);
+  document.addEventListener('webkitfullscreenchange', onChange);
 }
 
 function draw() {
@@ -75,6 +109,8 @@ function drawPreview() {
   let px = 24;
   let py = height - ph - 40; // clear of iPhone corners / home bar
   let s = pw / video.width;
+  previewRect = { x: px, y: py, w: pw, h: ph };
+  if (!showPreview) return;
 
   image(video, px, py, pw, ph);
   noFill();
