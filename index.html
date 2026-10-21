@@ -2,10 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="eyesMove">
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.png">
   <title>eyesMove</title>
   <style>
-    body { margin: 0; background: #111; overflow: hidden; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow: hidden;
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      overscroll-behavior: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    canvas { display: block; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js"></script>
   <script src="https://unpkg.com/ml5@1.2.1/dist/ml5.min.js"></script>

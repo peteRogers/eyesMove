@@ -22,7 +22,13 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  video = createCapture(VIDEO, { flipped: true });
+  pixelDensity(1);
+  video = createCapture(
+    { video: { facingMode: 'user', width: 640, height: 480 }, audio: false },
+    { flipped: true }
+  );
+  video.elt.setAttribute('playsinline', '');
+  video.elt.muted = true;
   video.size(640, 480);
   video.hide();
   faceMesh.detectStart(video, gotFaces);
@@ -66,8 +72,8 @@ function drawCover(img, alpha) {
 function drawPreview() {
   let pw = 200;
   let ph = pw * video.height / video.width;
-  let px = 16;
-  let py = height - ph - 16;
+  let px = 24;
+  let py = height - ph - 40; // clear of iPhone corners / home bar
   let s = pw / video.width;
 
   image(video, px, py, pw, ph);
