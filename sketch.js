@@ -4,6 +4,7 @@
 
 const NUM_FRAMES = 54;
 const SMOOTHING = 0.08; // lower = smoother/slower follow
+const SIZE = 0.5;       // eye fits within this fraction of the screen
 
 let faceMesh;
 let video;
@@ -93,9 +94,9 @@ function draw() {
   drawPreview();
 }
 
-// draw an image scaled to cover the canvas
+// draw an image centred, fitting within SIZE of the canvas (black border around)
 function drawCover(img, alpha) {
-  let s = max(width / img.width, height / img.height);
+  let s = min(width / img.width, height / img.height) * SIZE;
   let w = img.width * s;
   let h = img.height * s;
   tint(255, alpha);
